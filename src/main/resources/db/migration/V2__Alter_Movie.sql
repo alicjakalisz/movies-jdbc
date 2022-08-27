@@ -1,0 +1,2 @@
+ALTER TABLE movie
+    ADD COLUMN name VARCHAR(15) AFTER id;
