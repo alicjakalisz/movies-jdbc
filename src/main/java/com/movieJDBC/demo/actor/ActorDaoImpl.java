@@ -1,7 +1,6 @@
 package com.movieJDBC.demo.actor;
 
 import com.movieJDBC.demo.rowmapper.ActorRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,13 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ActorDataAccessService implements ActorDao {
+public class ActorDaoImpl implements ActorDao {
 
 
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    public ActorDataAccessService(JdbcTemplate jdbcTemplate) {
+    public ActorDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -58,5 +56,12 @@ public class ActorDataAccessService implements ActorDao {
         String sql = "SELECT * FROM Actor where id = ?";
         List<Actor> actorList = jdbcTemplate.query(sql, new ActorRowMapper(), id);
         return actorList.stream().findFirst();
+    }
+
+    @Override
+    public List<Actor> getActorsByIds(List<Integer> actorsIds) {
+       String sql  = "SELECT * FROM ACTOR WHERE id IN (?)";
+        List<Actor> actorList = jdbcTemplate.query(sql, new ActorRowMapper(), actorsIds);
+        return actorList;
     }
 }

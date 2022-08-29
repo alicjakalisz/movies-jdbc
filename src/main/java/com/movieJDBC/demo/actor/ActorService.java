@@ -9,28 +9,28 @@ import java.util.List;
 @Service
 public class ActorService {
 
-    private final ActorDataAccessService actorDataAccessService;
+    private final ActorDaoImpl actorDaoImpl;
 
     @Autowired
-    public ActorService(ActorDataAccessService actorDataAccessService) {
-        this.actorDataAccessService = actorDataAccessService;
+    public ActorService(ActorDaoImpl actorDaoImpl) {
+        this.actorDaoImpl = actorDaoImpl;
     }
 
 
     public List<Actor> listActors(){
-       return actorDataAccessService.selectActors();
+       return actorDaoImpl.selectActors();
     }
 
     public Actor getActorById(Integer id){
-        return actorDataAccessService.selectActorById(id).orElseThrow(() -> new NotFoundException(String.format("Actor with id %s not found", id)));
+        return actorDaoImpl.selectActorById(id).orElseThrow(() -> new NotFoundException(String.format("Actor with id %s not found", id)));
     }
 
     public Actor addActor(Actor actor){
-        return actorDataAccessService.insertActor(actor);
+        return actorDaoImpl.insertActor(actor);
     }
 
     public Actor deleteActor(Integer id){
-        return actorDataAccessService.deleteActor(id).orElseThrow(() -> new NotFoundException(String
+        return actorDaoImpl.deleteActor(id).orElseThrow(() -> new NotFoundException(String
                 .format("Actor with id s% does not exist",id)));
     }
 }

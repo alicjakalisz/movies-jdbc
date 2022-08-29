@@ -14,7 +14,6 @@ public class MovieRowMapper implements RowMapper<Movie> {
         return  new Movie(
                 rs.getInt("id"),
                 rs.getString("name"),
-               List.of(),
                 LocalDate.parse(rs.getString("release_date"))
         );
 

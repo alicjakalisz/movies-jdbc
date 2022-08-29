@@ -5,6 +5,7 @@ import com.movieJDBC.demo.actor.Actor;
 import com.movieJDBC.demo.actor.ActorDao;
 import com.movieJDBC.demo.actor.ActorService;
 import com.movieJDBC.demo.movie.Movie;
+import com.movieJDBC.demo.movie.MovieDto;
 import com.movieJDBC.demo.movie.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class DataFakerServiceImpl implements DataFakeService{
     private ActorService actorService;
 
 
+
     private Faker faker;
 
     @Autowired
@@ -35,45 +37,36 @@ public class DataFakerServiceImpl implements DataFakeService{
     }
 
     @Override
-    public int fakeActorData(int count) {
+    public void fake(int actorCount, int movieCount) {
 
         Actor actor;
-        int i;
-        for (i = 0; i < count; i++) {
+        List<Actor> actors  = new ArrayList<>();
+        for (int i = 0; i < actorCount; i++) {
             actor = new Actor();
             actor.setName(faker.artist().name());
-            actorDao.insertActor(actor);
+            actor = actorDao.insertActor(actor);
+            actors.add(actor);
 
         }
 
-        return i;
-    }
-
-    @Override
-    public int fakeMovieData(int count) {
         Movie movie;
-        int i;
-        for (i = 0; i <count ; i++) {
+        List<MovieDto> movies = new ArrayList<>();
+        for (int i = 0; i <movieCount ; i++) {
             movie = new Movie();
             movie.setName(faker.superhero().name());
 
-            movie.setActors(getRandomActorsFromDb());
-            movieService.addNewMovie(movie);
+            MovieDto movieDto1 = movieService.addNewMovie(movie);
+            movies.add(movieDto1);
         }
 
-        return i;
+        //Actors(Brad Pitt, Angelina, Jennifer, David)
+        for (MovieDto dto: movies) {
+            int movieActors = ThreadLocalRandom.current().nextInt(1,actorCount);
+            int actorId = 1; //TODO implement a method that from the full list of actors picks a random number of them
+            movieService.addActorToMovie(dto.getId(), actorId);
+        }
+
     }
 
-    private List<Actor> getRandomActorsFromDb(){
-        int max = actorService.listActors().size();
-        List<Actor> list = new ArrayList<>();
-        int randomActorId;
-        int randomNumberOfActors = ThreadLocalRandom.current().nextInt(1, 3 + 1);
-        for (int i = 0; i < randomNumberOfActors; i++) {
-            randomActorId =ThreadLocalRandom.current().nextInt(1, max);
-           list.add(actorService.getActorById(randomActorId));
-        }
-        return list;
-    }
 
 }

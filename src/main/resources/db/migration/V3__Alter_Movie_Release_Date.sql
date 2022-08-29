@@ -1,1 +1,1 @@
-ALTER TABLE movie ADD COLUMN release_date DATE AFTER name;
+ALTER TABLE MOVIE ADD COLUMN release_date DATE AFTER name;

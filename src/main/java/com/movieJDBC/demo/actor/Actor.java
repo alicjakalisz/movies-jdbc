@@ -1,6 +1,7 @@
 package com.movieJDBC.demo.actor;
 
 import lombok.*;
+import org.springframework.data.relational.core.mapping.Table;
 
 
 @NoArgsConstructor

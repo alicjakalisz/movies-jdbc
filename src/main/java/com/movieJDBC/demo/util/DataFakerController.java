@@ -1,10 +1,11 @@
 package com.movieJDBC.demo.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "api/fake")
+@RequestMapping(path = "api/v1/fake")
 public class DataFakerController {
 
     private final DataFakeService dataFakeService;
@@ -14,12 +15,15 @@ public class DataFakerController {
         this.dataFakeService = dataFakeService;
     }
 
-    @GetMapping("/movies/{count}")
-    public int insertMovieRows(@PathVariable("count") Integer count){
-        return  dataFakeService.fakeMovieData(count);
-    }
-    @GetMapping("/actors/{count}")
-    public int insertActorsRows(@PathVariable("count") Integer count){
-        return  dataFakeService.fakeActorData(count);
+    /**
+     * /api/v1/fake?actorCount=5&movieCount=3
+     * @param actorCount
+     * @param movieCount
+     * @return
+     */
+    @PostMapping("")
+    public ResponseEntity<Void> populateData(@RequestParam() Integer actorCount, @RequestParam() Integer movieCount){
+        dataFakeService.fake(actorCount, movieCount);
+        return ResponseEntity.ok().build();
     }
 }

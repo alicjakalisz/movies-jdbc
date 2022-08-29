@@ -8,8 +8,11 @@ import java.util.Optional;
 
 public interface MovieDao {
     List<Movie> selectMovies();
-    int insertMovie(Movie movie);
+    MovieDto insertMovie(Movie movie);
     int deleteMovie(int id);
     Optional<Movie> selectMovieById(int id);
+
+    List<MovieDto> search(Optional<Integer> actorId, Optional<String> actorName, Optional<String> movieName);
     // TODO: Update
+
 }

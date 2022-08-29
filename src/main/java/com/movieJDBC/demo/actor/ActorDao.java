@@ -11,4 +11,7 @@ public interface ActorDao {
     Actor insertActor(Actor actor);
     Optional<Actor> deleteActor (int id);
     Optional<Actor> selectActorById(int id);
+
+    List<Actor> getActorsByIds(List<Integer> ActorsIds);
+
 }

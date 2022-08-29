@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class MovieDataAccessServiceIntegrationTest {
+class MovieDaoImplIntegrationTest {
 
     @Test
     public void selectMovies() {

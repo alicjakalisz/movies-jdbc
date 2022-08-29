@@ -1,4 +1,4 @@
-create table movie
+create table MOVIE
 (
     id int PRIMARY KEY
 
